@@ -13,30 +13,50 @@
  */
 
 /**
- * Write your model definitions here
+ * Sample business network definition.
  */
-
 namespace org.acn.bank
 
-participant SampleParticipant identified by participantId {
+asset Wallet identified by walletId {
+  o String walletId
+  --> Client owner
+  o Integer money
+}
+
+participant Client identified by participantId {
   o String participantId
+  o String firstName
+  o String lastName
+  //o Wallet wallet
+}
+
+/*transaction SampleTransaction {
+  --> SampleAsset asset
+  o String newValue
+}*/
+
+transaction AddParticipant {
+  o Client newParticipant
+  o Wallet wallet
+}
+
+transaction DelParticipant {
+  --> Client tarParticipant
+}
+
+transaction UpdParticipant {
+  --> Client tarParticipant
   o String firstName
   o String lastName
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
-}
-
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+transaction TradeMoney {
+  --> Client ParticipantFrom
+  --> Client ParticipantTo
+  o Integer value
 }
 
 event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+  --> Wallet wallet
+  o String money
 }
