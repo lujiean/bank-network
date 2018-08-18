@@ -17,27 +17,35 @@
  */
 rule EverybodyCanReadEverything {
     description: "Allow all participants read access to all resources"
-    participant: "org.acn.bank.Client"
+    participant: "org.acn.bank.SampleParticipant"
     operation: READ
     resource: "org.acn.bank.*"
     action: ALLOW
 }
 
+rule EverybodyCanSubmitTransactions {
+    description: "Allow all participants to submit transactions"
+    participant: "org.acn.bank.SampleParticipant"
+    operation: CREATE
+    resource: "org.acn.bank.SampleTransaction"
+    action: ALLOW
+}
+
 rule OwnerHasFullAccessToTheirAssets {
     description: "Allow all participants full access to their assets"
-    participant(p): "org.acn.bank.Client"
+    participant(p): "org.acn.bank.SampleParticipant"
     operation: ALL
-    resource(r): "org.acn.bank.Wallet"
+    resource(r): "org.acn.bank.SampleAsset"
     condition: (r.owner.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
 rule SystemACL {
-    description: "System ACL to permit all access"
-    participant: "org.hyperledger.composer.system.Participant"
-    operation: ALL
-    resource: "org.hyperledger.composer.system.**"
-    action: ALLOW
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
 }
 
 rule NetworkAdminUser {

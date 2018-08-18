@@ -13,6 +13,9 @@
  */
 
 'use strict';
+/**
+ * Write the unit tests for your transction processor functions here
+ */
 
 const AdminConnection = require('composer-admin').AdminConnection;
 const BusinessNetworkConnection = require('composer-client').BusinessNetworkConnection;
@@ -23,13 +26,13 @@ const chai = require('chai');
 chai.should();
 chai.use(require('chai-as-promised'));
 
-const namespace = 'org.example.basic';
+const namespace = 'org.acn.bank';
 const assetType = 'SampleAsset';
 const assetNS = namespace + '.' + assetType;
 const participantType = 'SampleParticipant';
 const participantNS = namespace + '.' + participantType;
 
-describe('Sample', () => {
+describe('#' + namespace, () => {
     // In-memory card store for testing so cards are not persisted to the file system
     const cardStore = require('composer-common').NetworkCardStoreManager.getCardStore( { type: 'composer-wallet-inmemory' } );
 
@@ -399,7 +402,7 @@ describe('Sample', () => {
         const event = events[0];
         event.eventId.should.be.a('string');
         event.timestamp.should.be.an.instanceOf(Date);
-        event.asset.getFullyQualifiedIdentifier().should.equal('org.example.basic.SampleAsset#1');
+        event.asset.getFullyQualifiedIdentifier().should.equal(assetNS + '#1');
         event.oldValue.should.equal('10');
         event.newValue.should.equal('50');
     });
@@ -438,7 +441,7 @@ describe('Sample', () => {
         const event = events[0];
         event.eventId.should.be.a('string');
         event.timestamp.should.be.an.instanceOf(Date);
-        event.asset.getFullyQualifiedIdentifier().should.equal('org.example.basic.SampleAsset#2');
+        event.asset.getFullyQualifiedIdentifier().should.equal(assetNS + '#2');
         event.oldValue.should.equal('20');
         event.newValue.should.equal('60');
     });
