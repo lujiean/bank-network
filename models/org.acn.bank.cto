@@ -19,7 +19,6 @@ namespace org.acn.bank
 
 asset Wallet identified by walletId {
   o String walletId
-  --> Client owner
   o Integer money
 }
 
@@ -27,7 +26,7 @@ participant Client identified by participantId {
   o String participantId
   o String firstName
   o String lastName
-  //o Wallet wallet
+  o String walletId
 }
 
 /*transaction SampleTransaction {
